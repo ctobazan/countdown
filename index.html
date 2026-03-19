@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para María — 20 de Marzo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100%; }
+
+body { font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
+
+/* ── FULL PHOTO BACKGROUND ── */
+.photo-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0s, opacity 1.2s ease;
+}
+
+.photo-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05) 0%,
+    rgba(0,0,0,0.04) 35%,
+    rgba(0,0,0,0.52) 68%,
+    rgba(0,0,0,0.84) 100%
+  );
+}
+
+.photo-tint {
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  transition: background 1.4s ease;
+}
+
+.grain {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px; opacity: 0.03;
+}
+
+/* ── SCENE ── */
+.scene {
+  position: relative; z-index: 10;
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 2rem 1.8rem 3.5rem;
+  max-width: 700px; margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+}
+
+.place-name {
+  font-size: clamp(2.2rem, 7vw, 4.4rem); font-weight: 300; font-style: italic;
+  line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 0.45rem;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+  opacity: 0; animation: fadeUp 1s ease forwards 0.5s;
+}
+
+.place-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.57rem; letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 1.4rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.7s;
+}
+
+.rule { width: 34px; height: 1px; margin-bottom: 1.4rem; opacity: 0; animation: fadeIn 1s ease forwards 0.9s; }
+
+.poetic {
+  font-size: clamp(1rem, 2.8vw, 1.22rem); font-weight: 300; font-style: italic;
+  line-height: 1.88; max-width: 540px; margin-bottom: 2.2rem;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.25);
+  opacity: 0; animation: fadeUp 1s ease forwards 1s;
+}
+.poetic strong { font-style: normal; font-weight: 400; }
+
+.countdown-block {
+  display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 1.4rem;
+  opacity: 0; animation: fadeUp 1s ease forwards 1.2s;
+}
+.countdown-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.54rem; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 0.5rem;
+}
+.countdown-time {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(1.6rem, 5vw, 2.6rem); letter-spacing: 0.04em; line-height: 1;
+}
+.sep { font-size: 0.65em; margin: 0 0.06em; opacity: 0.55; }
+
+.progress-wrap { margin-bottom: 1.4rem; opacity: 0; animation: fadeIn 1s ease forwards 1.5s; }
+.progress-track { height: 1px; background: rgba(255,255,255,0.14); position: relative; margin-bottom: 0.5rem; }
+.progress-fill  { position: absolute; left: 0; top: 0; height: 100%; transition: width 1s linear; }
+.progress-labels {
+  display: flex; justify-content: space-between;
+  font-family: 'Space Mono', monospace; font-size: 0.47rem; letter-spacing: 0.1em; opacity: 0.5;
+}
+
+.hour-dots { display: flex; gap: 0.32rem; flex-wrap: wrap; opacity: 0; animation: fadeIn 1s ease forwards 1.7s; }
+.hour-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.18);
+  transition: all 0.4s;
+}
+.hour-dot.done    { background: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.55); }
+.hour-dot.current { background: white; border-color: white; animation: dotPulse 2s ease-in-out infinite; }
+
+@keyframes dotPulse {
+  0%,100% { box-shadow: 0 0 4px rgba(255,255,255,0.4); }
+  50%      { box-shadow: 0 0 12px rgba(255,255,255,0.9); }
+}
+
+/* ── BIRTHDAY ── */
+#bday-scene {
+  display: none; position: relative; z-index: 10;
+  min-height: 100svh; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 3rem 1.8rem;
+  max-width: 580px; margin: 0 auto;
+}
+.bday-stars { font-size: 1.2rem; letter-spacing: 0.4em; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; opacity: 0; animation: fadeIn 1.5s ease forwards 0.5s; }
+.bday-title { font-size: clamp(2.8rem, 9vw, 5.5rem); font-weight: 300; font-style: italic; line-height: 1.05; color: white; text-shadow: 0 2px 30px rgba(0,0,0,0.4); margin-bottom: 0.3rem; opacity: 0; animation: fadeUp 1.2s ease forwards 0.8s; }
+.bday-name  { color: #f0d090; display: block; }
+.bday-text  { font-size: clamp(1rem, 2.8vw, 1.22rem); font-weight: 300; font-style: italic; line-height: 1.9; color: rgba(255,255,255,0.72); max-width: 480px; margin-top: 2rem; opacity: 0; animation: fadeUp 1.2s ease forwards 1.2s; text-shadow: 0 1px 10px rgba(0,0,0,0.3); }
+.bday-text strong { color: white; font-style: normal; }
+
+.footer-note {
+  position: fixed; top: 1.2rem; right: 1.5rem;
+  font-family: 'Space Mono', monospace; font-size: 0.47rem;
+  letter-spacing: 0.14em; color: rgba(255,255,255,0.28); text-transform: uppercase; z-index: 20;
+}
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); }
+</style>
+</head>
+<body>
+
+<div class="photo-bg"  id="photo-bg"></div>
+<div class="photo-tint" id="photo-tint"></div>
+<div class="grain"></div>
+
+<div class="scene" id="main-scene">
+  <div class="eyebrow"    id="eyebrow"></div>
+  <div class="place-name" id="place-name"></div>
+  <div class="place-tag"  id="place-tag"></div>
+  <div class="rule"       id="rule"></div>
+  <p   class="poetic"     id="poetic-text"></p>
+  <div class="countdown-block">
+    <span class="countdown-label">faltan</span>
+    <div class="countdown-time">
+      <span id="cd-h">00</span><span class="sep">h</span>
+      <span id="cd-m">00</span><span class="sep">m</span>
+      <span id="cd-s">00</span><span class="sep">s</span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-labels"><span>1pm · 19 mar</span><span>12am · 20 mar</span></div>
+  </div>
+  <div class="hour-dots" id="hour-dots"></div>
+</div>
+
+<div id="bday-scene">
+  <div class="bday-stars">✦ ✦ ✦</div>
+  <div class="bday-title">Feliz<br><span class="bday-name">cumpleaños,<br>María</span></div>
+  <p class="bday-text" id="bday-text"></p>
+</div>
+
+<div class="footer-note" id="footer-note">Cusco · Perú · 20·III</div>
+
+<script>
+const SLOTS = [
+  { hour:13, img:'1-Waqrapuqara.jpg',        tint:'#1e3a0a', accent:'#a8d060', text:'#e4f2c8', dim:'rgba(215,238,185,0.7)',
+    place:'Waqrapuqara', tag:'Fortaleza inca · Cusco',
+    poetic:`En quechua, <strong>Waqra Pukara</strong> significa "fortaleza con cuernos". Se alza sobre un promontorio de roca viva como si la montaña misma hubiera decidido construir un templo. Para llegar hay que caminar dos días. Algunos lugares exigen que los merezcas.` },
+
+  { hour:14, img:'2-machupicchu-montana.jpg', tint:'#0e2a06', accent:'#78c850', text:'#d4efc0', dim:'rgba(200,230,175,0.7)',
+    place:'Montaña Machu Picchu', tag:'Cumbre sagrada · 3082 msnm',
+    poetic:`No la ciudadela — la montaña. Desde su cima, la <strong>Llaqta</strong> parece un modelo en miniatura, y el Huayna Picchu su guardián. Los incas eligieron este lugar porque desde aquí el horizonte se rompe en todas las direcciones. Ver el mundo entero desde un solo punto.` },
+
+  { hour:15, img:'3-choquequirao.jpg',        tint:'#123a0a', accent:'#70c048', text:'#ccebba', dim:'rgba(188,224,170,0.7)',
+    place:'Choquequirao', tag:'La ciudad perdida · Cusco',
+    poetic:`Dicen que es la hermana olvidada de Machu Picchu. Para llegar se necesitan cuatro días de trekking. Solo la visita el uno por ciento de quienes van a Cusco. <strong>Choquequirao</strong> todavía guarda más de lo que ha revelado — dos tercios de sus estructuras siguen bajo la tierra.` },
+
+  { hour:16, img:'4-salkantay.jpg',           tint:'#08243a', accent:'#78c0d8', text:'#cceaf8', dim:'rgba(185,220,240,0.7)',
+    place:'Salkantay', tag:'El salvaje · 6271 msnm',
+    poetic:`Su nombre en quechua significa <strong>"montaña salvaje"</strong>. Es el sexto pico más alto del Perú. Los Apus son los espíritus de las montañas, y Salkantay es uno de los más respetados — se le pide permiso antes de comenzar cualquier viaje. Hay cosas que no se cruzan, se reverencian.` },
+
+  { hour:17, img:'5-ausangate.jpg',           tint:'#082838', accent:'#40c0b8', text:'#c0ecec', dim:'rgba(175,225,225,0.7)',
+    place:'Ausangate', tag:'El Apu mayor · 6384 msnm',
+    poetic:`El más sagrado de todos los Apus de Cusco. <strong>Ausangate</strong> es el corazón espiritual de los Andes del sur. A sus faldas existe el Qoyllur Riti — una peregrinación donde decenas de miles de personas suben en la oscuridad a buscar la primera luz. Algunas montañas no son geografía. Son fe.` },
+
+  { hour:18, img:'6-mantanay.jpg',            tint:'#081a08', accent:'#68b058', text:'#c4e4b8', dim:'rgba(180,218,168,0.7)',
+    place:'ACP Mantanay', tag:'Área de conservación · Cusco',
+    poetic:`Un lugar que la mayoría de turistas nunca encontrará en un mapa. <strong>Mantanay</strong> es una de esas áreas donde el bosque de neblina se mezcla con los pajonales de altura y el silencio tiene textura. Los lugares que no son famosos suelen ser los más honestos.` },
+
+  { hour:19, img:'7-inti-punku.jpg',          tint:'#281600', accent:'#e8b848', text:'#f8e4b0', dim:'rgba(240,220,170,0.7)',
+    place:'Inti Punku', tag:'La Puerta del Sol · Camino Inca',
+    poetic:`Después de cuatro días caminando el Camino Inca, los peregrinos llegaban a <strong>Inti Punku</strong> — la Puerta del Sol — y veían por primera vez Machu Picchu iluminada por el amanecer. No es solo una puerta. Es el momento en que el esfuerzo y la belleza coinciden exactamente.` },
+
+  { hour:20, img:'8-qoylluriti.jpg',          tint:'#180e2a', accent:'#a898d8', text:'#dcd8f8', dim:'rgba(210,205,245,0.7)',
+    place:'Laguna Turquesa de Qoylluriti', tag:'Nieve con estrellas · 4900 msnm',
+    poetic:`<strong>Qoyllur Riti</strong> en quechua: "nieve con estrellas". A casi cinco mil metros de altura, donde el cielo y el glaciar se confunden, existe una peregrinación tan antigua que nadie recuerda cuándo empezó. Decenas de miles suben en la oscuridad. Algunos lugares no se visitan. Se peregrina a ellos.` },
+
+  { hour:21, img:'9-pumahuanca.jpg',          tint:'#0c1e0c', accent:'#80c068', text:'#cce8b8', dim:'rgba(188,222,170,0.7)',
+    place:'Valle Pumahuanca', tag:'El valle del puma · Urubamba',
+    poetic:`Un valle que baja desde las alturas hacia el Urubamba entre andenes abandonados y comunidades que todavía siembran como hace quinientos años. <strong>Pumahuanca</strong> — el río del puma — corre entre rocas cubiertas de musgo y paredes de piedra que no tienen prisa de desmoronarse.` },
+
+  { hour:22, img:'10-quillabamba.jpg',        tint:'#082808', accent:'#58c070', text:'#c0f0cc', dim:'rgba(178,232,194,0.7)',
+    place:'Quillabamba', tag:'La ciudad del eterno verano · La Convención',
+    poetic:`Donde los Andes se derriten hacia la selva. <strong>Quillabamba</strong> es cálida y lenta, con el río Urubamba ya ancho y marrón. El café y el cacao crecen aquí. Es el lugar donde Cusco deja de ser montaña y empieza a ser otra cosa — igual de hermosa, completamente distinta.` },
+
+  { hour:23, img:'11-poc-poc.jpg',            tint:'#280e04', accent:'#e07848', text:'#f8d8c0', dim:'rgba(242,208,186,0.7)',
+    place:'Catarata Poc Poc', tag:'Cascada de altura · Cusco',
+    poetic:`El agua cae desde tanta distancia que llega convertida en niebla antes de tocar el suelo. Y en el punto exacto donde el caos del agua se encuentra con la luz, aparece un arcoíris. <strong>Poc Poc</strong> es eso: el lugar donde la fuerza bruta y la delicadeza son la misma cosa.` },
+];
+
+const BIRTHDAY = {
+  img:'3-choquequirao.jpg', tint:'#102808',
+  text:`Hoy, exactamente a esta hora, hace <strong>27 años</strong>, en Chota, Cajamarca, alguien decidió llegar al mundo.<br><br>El cielo esa noche tenía la Cruz del Sur en el cénit, el Sol estaba cruzando hacia Aries, y los Andes — estos mismos Andes que hemos recorrido juntos hoy — eran exactamente iguales a como son ahora.<br><br>Las montañas no cambian. Las personas sí. Y eso es lo más hermoso de los dos.<br><br><strong>Feliz cumpleaños, María.</strong> ✦`,
+};
+
+// Time helpers
+function lima() {
+  const n = new Date();
+  return new Date(n.getTime() + n.getTimezoneOffset()*60000 - 5*3600000);
+}
+function slotIdx(t) {
+  const [m,d,h] = [t.getMonth(), t.getDate(), t.getHours()];
+  if (m > 2 || (m===2 && d>19)) return 'birthday';
+  if (m===2 && d===19 && h>=23) return 'birthday';
+  if (m===2 && d===19 && h>=13) return h-13;
+  return 0;
+}
+function secsLeft(t) {
+  const b = new Date(t); b.setDate(20); b.setMonth(2); b.setHours(0,0,0,0);
+  return Math.max(0, Math.floor((b-t)/1000));
+}
+function pad(n){ return String(n).padStart(2,'0'); }
+
+// Apply color theme
+function theme(slot) {
+  document.getElementById('photo-bg').style.backgroundImage = `url('${slot.img}')`;
+  document.getElementById('photo-tint').style.background    = slot.tint;
+  document.getElementById('eyebrow').style.color            = slot.dim;
+  document.getElementById('place-name').style.color         = slot.text;
+  document.getElementById('place-tag').style.color          = slot.dim;
+  document.getElementById('poetic-text').style.color        = slot.dim;
+  document.getElementById('rule').style.background          = slot.accent;
+  document.querySelector('.countdown-label').style.color    = slot.dim;
+  document.querySelector('.countdown-time').style.color     = slot.text;
+  document.querySelectorAll('.sep').forEach(s => s.style.color = slot.accent);
+  document.getElementById('progress-fill').style.background = slot.accent;
+  document.querySelectorAll('.progress-labels span').forEach(s => s.style.color = slot.dim);
+}
+
+function buildDots(idx) {
+  const w = document.getElementById('hour-dots');
+  w.innerHTML = '';
+  SLOTS.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'hour-dot'+(i<idx?' done':i===idx?' current':'');
+    w.appendChild(d);
+  });
+}
+
+let lastIdx = -99;
+
+function tick() {
+  const t   = lima();
+  const idx = slotIdx(t);
+
+  if (idx === 'birthday') {
+    document.getElementById('main-scene').style.display = 'none';
+    const bs = document.getElementById('bday-scene');
+    bs.style.display = 'flex';
+    document.getElementById('photo-bg').style.backgroundImage = `url('${BIRTHDAY.img}')`;
+    document.getElementById('photo-tint').style.background    = BIRTHDAY.tint;
+    document.getElementById('bday-text').innerHTML            = BIRTHDAY.text;
+    document.getElementById('footer-note').textContent        = '20 de marzo · tu día';
+    return;
+  }
+
+  const slot = SLOTS[idx];
+  if (idx !== lastIdx) {
+    theme(slot);
+    document.getElementById('eyebrow').textContent    = `Cusco · Perú — ${pad(slot.hour)}:00`;
+    document.getElementById('place-name').textContent = slot.place;
+    document.getElementById('place-tag').textContent  = slot.tag;
+    document.getElementById('poetic-text').innerHTML  = slot.poetic;
+    buildDots(idx);
+    lastIdx = idx;
+  }
+
+  const s = secsLeft(t);
+  document.getElementById('cd-h').textContent = pad(Math.floor(s/3600));
+  document.getElementById('cd-m').textContent = pad(Math.floor((s%3600)/60));
+  document.getElementById('cd-s').textContent = pad(s%60);
+
+  const pct = Math.min(100, ((idx*3600 + t.getMinutes()*60 + t.getSeconds()) / (11*3600))*100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+}
+
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
