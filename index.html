@@ -174,14 +174,14 @@ body { font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
   </div>
   <div class="progress-wrap">
     <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="progress-labels"><span>1pm · 19 mar</span><span>12am · 20 mar</span></div>
+    <div class="progress-labels"><span>19 mar</span><span>20 mar</span></div>
   </div>
   <div class="hour-dots" id="hour-dots"></div>
 </div>
 
 <div id="bday-scene">
   <div class="bday-stars">✦ ✦ ✦</div>
-  <div class="bday-title">Feliz<br><span class="bday-name">cumpleaños,<br>María</span></div>
+  <div class="bday-title">Feliz<br><span class="bday-name">casi-cumpleaños,<br>María</span></div>
   <p class="bday-text" id="bday-text"></p>
 </div>
 
@@ -191,19 +191,19 @@ body { font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
 const SLOTS = [
   { hour:13, img:'1-Waqrapuqara.jpg',        tint:'#1e3a0a', accent:'#a8d060', text:'#e4f2c8', dim:'rgba(215,238,185,0.7)',
     place:'Waqrapuqara', tag:'Fortaleza inca · Cusco',
-    poetic:`En quechua, <strong>Waqra Pukara</strong> significa "fortaleza con cuernos". Se alza sobre un promontorio de roca viva como si la montaña misma hubiera decidido construir un templo. Para llegar hay que caminar dos días. Algunos lugares exigen que los merezcas.` },
+    poetic:`En quechua, <strong>Waqra Pukara</strong> significa "fortaleza con cuernos". Me parece realmente genial que este haya sido tu primer trekk largo y exigente. Linda bienvenida a tu momento trekkero. Ya falta poco pa tu nacimiento.` },
 
   { hour:14, img:'2-machupicchu-montana.jpg', tint:'#0e2a06', accent:'#78c850', text:'#d4efc0', dim:'rgba(200,230,175,0.7)',
     place:'Montaña Machu Picchu', tag:'Cumbre sagrada · 3082 msnm',
-    poetic:`No la ciudadela — la montaña. Desde su cima, la <strong>Llaqta</strong> parece un modelo en miniatura, y el Huayna Picchu su guardián. Los incas eligieron este lugar porque desde aquí el horizonte se rompe en todas las direcciones. Ver el mundo entero desde un solo punto.` },
+    poetic:`Esto lo conocerás y verás el otro lado de la maravilla. Desde aqui la <strong>Llaqta</strong> te parecerá un modelo en miniatura, y verás como el Huayna Picchu se impone. Los incas eligieron este lugar porque desde aquí el horizonte se rompe en todas las direcciones. Falta aun mas poquito para las 12 uy!.` },
 
   { hour:15, img:'3-choquequirao.jpg',        tint:'#123a0a', accent:'#70c048', text:'#ccebba', dim:'rgba(188,224,170,0.7)',
     place:'Choquequirao', tag:'La ciudad perdida · Cusco',
-    poetic:`Dicen que es la hermana olvidada de Machu Picchu. Para llegar se necesitan cuatro días de trekking. Solo la visita el uno por ciento de quienes van a Cusco. <strong>Choquequirao</strong> todavía guarda más de lo que ha revelado — dos tercios de sus estructuras siguen bajo la tierra.` },
+    poetic:`Dicen que es la hermana olvidada de Machu Picchu. Es exigente pero es una de las rutas mas maravillosas del Perú. Solo la visita el uno por ciento de quienes van a Cusco. <strong>Choquequirao</strong> todavía guarda más de lo que ha revelado — dos tercios de sus estructuras siguen bajo la tierra. Tic tac, tic tac, cerquita a tu cumple.` },
 
   { hour:16, img:'4-salkantay.jpg',           tint:'#08243a', accent:'#78c0d8', text:'#cceaf8', dim:'rgba(185,220,240,0.7)',
     place:'Salkantay', tag:'El salvaje · 6271 msnm',
-    poetic:`Su nombre en quechua significa <strong>"montaña salvaje"</strong>. Es el sexto pico más alto del Perú. Los Apus son los espíritus de las montañas, y Salkantay es uno de los más respetados — se le pide permiso antes de comenzar cualquier viaje. Hay cosas que no se cruzan, se reverencian.` },
+    poetic:`Su nombre en quechua significa <strong>"montaña salvaje"</strong>. Es el sexto pico más alto del Perú. Esta es la montaña que me representa, ya te contaré su historia. Salkantay es uno de los más respetados por la dificultad y la hermosura de sus perspectivas. Es muy misterioso que se encuentre muy sola en medio de tanto valle. Ya vas a llegar al mundo!` },
 
   { hour:17, img:'5-ausangate.jpg',           tint:'#082838', accent:'#40c0b8', text:'#c0ecec', dim:'rgba(175,225,225,0.7)',
     place:'Ausangate', tag:'El Apu mayor · 6384 msnm',
@@ -211,11 +211,11 @@ const SLOTS = [
 
   { hour:18, img:'6-mantanay.jpg',            tint:'#081a08', accent:'#68b058', text:'#c4e4b8', dim:'rgba(180,218,168,0.7)',
     place:'ACP Mantanay', tag:'Área de conservación · Cusco',
-    poetic:`Un lugar que la mayoría de turistas nunca encontrará en un mapa. <strong>Mantanay</strong> es una de esas áreas donde el bosque de neblina se mezcla con los pajonales de altura y el silencio tiene textura. Los lugares que no son famosos suelen ser los más honestos.` },
+    poetic:`Un lugar que la mayoría de turistas nunca encontrará en un mapa. <strong>Mantanay</strong> es una de esas rutas que he conocido y me gustaría compartirte para que puedas conocerla! Es una de mis favoritas de la vida. Y el mundo ya está cerca de escuchar tus llantos de wawita recien nacida.` },
 
   { hour:19, img:'7-inti-punku.jpg',          tint:'#281600', accent:'#e8b848', text:'#f8e4b0', dim:'rgba(240,220,170,0.7)',
     place:'Inti Punku', tag:'La Puerta del Sol · Camino Inca',
-    poetic:`Después de cuatro días caminando el Camino Inca, los peregrinos llegaban a <strong>Inti Punku</strong> — la Puerta del Sol — y veían por primera vez Machu Picchu iluminada por el amanecer. No es solo una puerta. Es el momento en que el esfuerzo y la belleza coinciden exactamente.` },
+    poetic:`Después de caminar mucho, llegar a <strong>Inti Punku</strong> — la Puerta del Sol — verás a Veronica, la montaña más vista por todo turista que llega a Cusco. Realmente tenemos que ir a ese lugar! La vista será muy hermosa. Estas a nada de nacer!!!!` },
 
   { hour:20, img:'8-qoylluriti.jpg',          tint:'#180e2a', accent:'#a898d8', text:'#dcd8f8', dim:'rgba(210,205,245,0.7)',
     place:'Laguna Turquesa de Qoylluriti', tag:'Nieve con estrellas · 4900 msnm',
@@ -223,20 +223,20 @@ const SLOTS = [
 
   { hour:21, img:'9-pumahuanca.jpg',          tint:'#0c1e0c', accent:'#80c068', text:'#cce8b8', dim:'rgba(188,222,170,0.7)',
     place:'Valle Pumahuanca', tag:'El valle del puma · Urubamba',
-    poetic:`Un valle que baja desde las alturas hacia el Urubamba entre andenes abandonados y comunidades que todavía siembran como hace quinientos años. <strong>Pumahuanca</strong> — el río del puma — corre entre rocas cubiertas de musgo y paredes de piedra que no tienen prisa de desmoronarse.` },
+    poetic:`Un valle que baja desde las alturas hacia el Urubamba entre andenes abandonados y comunidades que todavía siembran como hace quinientos años. <strong>Pumahuanca</strong> — el río del puma — corre entre rocas cubiertas de musgo y paredes de piedra que no tienen prisa de desmoronarse. Seguro estamos comiendo o conversando. Falta poquito, uy.` },
 
   { hour:22, img:'10-quillabamba.jpg',        tint:'#082808', accent:'#58c070', text:'#c0f0cc', dim:'rgba(178,232,194,0.7)',
     place:'Quillabamba', tag:'La ciudad del eterno verano · La Convención',
-    poetic:`Donde los Andes se derriten hacia la selva. <strong>Quillabamba</strong> es cálida y lenta, con el río Urubamba ya ancho y marrón. El café y el cacao crecen aquí. Es el lugar donde Cusco deja de ser montaña y empieza a ser otra cosa — igual de hermosa, completamente distinta.` },
+    poetic:`Donde los Andes se derriten hacia la selva. <strong>Quillabamba</strong> es cálida y lenta, con el río Urubamba ya ancho y marrón. El café y el cacao crecen aquí. Pero lo genial es el barranquismo que se hará con harta adrenalina. Quizás será el momento donde dejes de temer a la altura y mas bien empieces a convivir con esos enfrentamientos. Un par mas y ya!` },
 
   { hour:23, img:'11-poc-poc.jpg',            tint:'#280e04', accent:'#e07848', text:'#f8d8c0', dim:'rgba(242,208,186,0.7)',
     place:'Catarata Poc Poc', tag:'Cascada de altura · Cusco',
-    poetic:`El agua cae desde tanta distancia que llega convertida en niebla antes de tocar el suelo. Y en el punto exacto donde el caos del agua se encuentra con la luz, aparece un arcoíris. <strong>Poc Poc</strong> es eso: el lugar donde la fuerza bruta y la delicadeza son la misma cosa.` },
+    poetic:`Aqui iremos el domingo. El agua cae desde tanta distancia que llega convertida en niebla antes de tocar el suelo. Y en el punto exacto donde la luz y el agua se encuentran, esperemos que aparezca un arcoíris. <strong>Poc Poc</strong> será el lugar del último regalo. Pero no la última experiencia trekkera. Estamos a minutos de tu cumple!!!.` },
 ];
 
 const BIRTHDAY = {
   img:'3-choquequirao.jpg', tint:'#102808',
-  text:`Hoy, exactamente a esta hora, hace <strong>27 años</strong>, en Chota, Cajamarca, alguien decidió llegar al mundo.<br><br>El cielo esa noche tenía la Cruz del Sur en el cénit, el Sol estaba cruzando hacia Aries, y los Andes — estos mismos Andes que hemos recorrido juntos hoy — eran exactamente iguales a como son ahora.<br><br>Las montañas no cambian. Las personas sí. Y eso es lo más hermoso de los dos.<br><br><strong>Feliz cumpleaños, María.</strong> ✦`,
+  text:`Hoy, exactamente hace <strong>27 años</strong>, en algun lugar del norte, alguien decidió llegar al mundo.<br><br>El cielo esa noche tenía la Cruz del Sur en el cénit, el Sol estaba cruzando hacia Aries, y los Andes — estos mismos Andes que hemos recorrido juntos hoy — eran exactamente iguales a como son ahora.<br><br>Las montañas no cambian. Las personas sí. Y eso es lo más hermoso de los dos.<br><br><strong>Feliz cumpleaños, María.</strong> ✦`,
 };
 
 // Time helpers
